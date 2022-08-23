@@ -1,0 +1,71 @@
+{% load static %}
+<html>
+    <head>
+        <title>Edit</title>
+        <link rel="stylesheet" href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>
+        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js'></script>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'home/edit.css' %}">
+    </head>
+    <body>
+        <div class="container rounded bg-white mt-5">
+            <div class="row">
+                <div class="col-md-4 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        {% if profileImage.url is not None %}
+                        <img class="rounded-circle mt-5" src="{{profileImage.url}}" width="140">
+                        {% else %}
+                        <img class="rounded-circle mt-5" src="https://afribary.com/authors/anonymous-user/photo" width="140">
+                        {% endif %}
+                        <span class="font-weight-bold">{{username}}</span><span class="text-black-50">{{email}}</span>
+                        <span>{{country}}</span>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex flex-row align-items-center back"><i class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                                <a href="/home/login/"><h6>Back to home</h6></a>
+                            </div>
+                            <h6 class="text-right">Edit Profile</h6>
+                        </div>
+                        <form method="post" action="/home/profile/manage_edit">{% csrf_token %}
+                            <span>Name</span>
+                            <span style="margin-left: 20rem;">Contact Number</span>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Name" name="name" id="name" value="{{ name }}" ></div>
+                            <div class="col-md-6"><input type="text" class="form-control"  placeholder="Phone no." name="phone" id="phone" value="{{mobile}}"></div>
+                        </div>
+                        <br>
+                        <span>Country</span>
+                        <span style="margin-left: 19rem;">State</span>
+                        <div class="row mt-3">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Country" name="country" id="country" value="{{country}}" ></div>
+                            <div class="col-md-6"><input type="text" class="form-control"  placeholder="State" name="state" id="state" value="{{state}}"></div>
+                        </div>
+                        <br>
+                        <span>Stats</span>
+                        <span style="margin-left: 20.5rem;">Description</span>
+                        <div class="row mt-3">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Stats" name="stats" id="stats" value="{{stats}}"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Description" name="description" id="description" value="{{description}}"></div>
+                        </div>
+                        <br>
+                        <span>Password</span>
+                        <div class="row mt-3">
+                            <div class="col-md-6"><input type="text" class="form-control"  placeholder="Password" name="password" id="password" value="{{password}}"></div>
+                        </div>
+                        <br>
+                        <span>Games</span>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><textarea class="form-control" placeholder="Games" name="game" id="game">{{games}}</textarea></div>
+                        </div>
+                        <div class="mt-5 text-right"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

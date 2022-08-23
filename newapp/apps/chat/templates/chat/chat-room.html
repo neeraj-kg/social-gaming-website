@@ -1,0 +1,291 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room : {{currRoom.roomName}}</title>
+
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/userhome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/create.css' %}">
+</head>
+<body style="background-image: url('https://images8.alphacoders.com/719/thumb-1920-719873.jpg');background-repeat: no-repeat;background-size: cover;background-attachment: fixed;">
+    <div class="nav" style="padding: 0cm; margin-top: -8px;height: 3.4rem;" >
+        <span class="link">
+          <a href="/home/index/">Home</a>
+        </span>
+        <div class="link">
+          <a href="/home/profile/">Profile</a>
+        </div>
+        <div class="link">
+            <a href="/paytm/offers/">Shop</a>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn" >About</button>
+            <div class="dropdown-content link">
+              <a href="/home/about/">About Us</a>
+              <a href="#">Contact</a>
+              <a href="/home/event/">Events</a>
+            </div>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Assemble</button>
+            <div class="dropdown-content link">
+              <a href="/chat">Chat</a>
+              <a href="#">Clan</a>
+            </div>
+        </div>
+          <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
+          </div>
+    
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px;  " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+        </form>
+    </span>
+    <span style="margin-right: 3rem;"></span>
+    
+        <div class="link">
+            <a href="/home/notify/">Notifications</a>
+        </div>
+    
+        <div class="link">
+            <a href="/home/logout/">Logout</a>
+        </div>
+    
+      </div>
+      <br>
+      <br>
+
+      <table style="">
+          <tr>
+              <td style="width: 5rem;">
+      <span style="margin-top: 0em;">
+        <input class="formStyle" id="myinput" type="text" required placeholder="Enter Message">
+        <span><button style= "margin-top: 0rem;margin-left: 20rem;" class="formButton" id="mybtn">Send</button></span>
+        <span><button style="margin-left: 0rem;" class="formButton" id="leavebtn">Leave room</button></span>
+      </span>
+    
+
+    
+    <br><br>
+    <br><br>
+    <br><br>
+    <br>
+    <br>
+
+
+<span  id="chat-content" style="color:white; font-size: 18px;">
+
+    {% for i in room_chats %}
+
+   {{i.by_whom.username}}  :  {{i.message}}  <br><br>
+
+    {% endfor %}
+
+</span>
+</td>
+
+
+
+<td style="position: absolute;">
+<div style="color: white;margin-top: 0rem;margin-left: 0%;position: absolute;">
+      {% if is_admin %}
+
+        <h1>Members: </h1>
+        {% for member in all_members %}
+            <div style="margin-left: 0rem;font-size: larger;max-width: 0rem;margin-top: 0%;">{{member.username}}</div>
+            <span>
+            <button style="background-color: rgb(176, 30, 206);color: white;font-size:14px;font-weight: 500;padding:6px 24px;
+            text-decoration:none;" name="{{member.username}}" class="kick">Kick</button>
+            <button style="background-color: rgb(176, 30, 206);color: white;font-size:14px;font-weight: 500;padding:6px 24px;
+            text-decoration:none;" name="{{member.username}}" class="ban">Ban</button><br><br>
+            </span>
+        {% endfor %}
+
+      {% endif %}
+
+</div>
+</td>
+</tr>
+</table>
+
+
+
+
+
+
+<script>
+var input = document.getElementById("myinput");
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("mybtn").click();
+  }
+});
+</script>
+
+    <script type="text/javascript">
+
+        function updateMsg()
+        {
+            console.log("requesting json");
+    
+            $.getJSON("{% url 'getchats' currRoom.id %}" , function(response)
+            {
+                if(response.check=="no room")
+                {
+                    alert("This room no longer exists...!!");
+                    setTimeout(function(){window.location.href="/chat/";},2000);
+                }
+                else if(response.check=="not member")
+                {
+                    alert("You have been kicked out of the room...!!");
+                    setTimeout(function(){window.location.href="/chat/";},2000); 
+                }
+                console.log(response.chats.length);
+    
+                $("#chat-content").empty();
+    
+                for(var i=0;i<response.chats.length;i++)
+                {
+                    
+                    $("#chat-content").prepend(response.users[i]+"  :  "+response.chats[i]+'<br><br>');
+                }
+                setTimeout('updateMsg()' , 1000);
+            });
+        }
+    
+    
+        $(document).ready(function() {
+            $.ajaxSetup({cache:false});
+            updateMsg();
+        });
+
+
+        $("#leavebtn").click(
+            function(e){
+                var check = confirm("Are you sure you want to leave the chat room...??");
+
+                if(check==false)
+                {
+
+                }
+                else{
+
+                var href = "{% url 'handleleave' %}";
+                var roomid = "{{currRoom.id}}";
+
+                e.preventDefault();
+
+                $.ajax({
+                    url:href,
+                    data:{'roomid':roomid},
+                    success:function(){
+                        window.location.href="/chat/";
+
+                    }
+
+                });
+
+            }
+
+        }
+    );
+
+
+
+        $(".kick").click(
+            function(e){
+                var href = "{% url 'handlekick' %}";
+                var user = this.name;
+                var roomid = "{{currRoom.id}}";
+               // console.log(user);
+
+               $.ajax({
+                   url:href,
+                   data:{'user':user , 'roomid':roomid},
+                   success:function(response){
+                        alert(user+" Kicked from the room...!!");
+                        window.location.reload();
+                        return true;
+                   }
+               })
+            }
+        );
+
+
+        $(".ban").click(
+            function(e){
+                var href = "{% url 'handleban' %}";
+                var user = this.name;
+                var roomid = "{{currRoom.id}}";
+               // console.log(user);
+
+               $.ajax({
+                   url:href,
+                   data:{'user':user , 'roomid':roomid},
+                   success:function(response){
+                        alert(user+" Banned from the room...!!");
+                        window.location.reload();
+                        return true;
+                   }
+               })
+            }
+        );
+    
+    
+    
+    
+        $("#mybtn").click(
+                       function(e){                       
+                            var href = "{%  url 'handlemsg' %}"
+                            var roomid = "{{currRoom.id}}"
+                            var user = "{{currUser}}"
+                            console.log(href,roomid);
+                            e.preventDefault();
+                            var message = document.getElementById("myinput");
+                            message=message.value;
+                            console.log(message);
+    
+                            $("#myinput").val("");
+                        if(message.length!=0){
+                        
+                    
+                    $.ajax({
+                        url:href,
+                        data : {'msg':message , 'roomid':roomid},
+                        success:function(response){
+                            
+                          if(response.check=="ok"){
+                          $("#chat-content").prepend(user+" : "+message+"<br><br>");
+                          }
+                          else{
+                            window.location.href="/chat/";
+                          }
+    
+                        }
+                        
+                    })
+                }
+            }
+        );
+            
+    </script>
+
+
+</body>
+</html>

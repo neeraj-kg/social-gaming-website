@@ -1,0 +1,348 @@
+{% load static %}
+<html>
+    <head>
+        <title>{{user.username}}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'home/profile.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+
+
+
+        
+    </head>
+    <body>
+
+        {% if loggedIn %}
+    <div class="nav" style="padding: 0cm; margin: 0px;height: 3.85rem; padding-top: 0rem;" >
+        <span class="link">
+          <a href="/home/index/">Home</a>
+        </span>
+        <div class="link">
+          <a href="/home/profile/">Profile</a>
+        </div>
+        <div class="link">
+            <a href="/paytm/offers/">Shop</a>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn" >About</button>
+            <div class="dropdown-content link">
+              <a href="/home/about/">About Us</a>
+              <a href="#">Contact</a>
+            </div>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Assemble</button>
+            <div class="dropdown-content link">
+              <a href="/chat">Chat</a>
+              <a href="{% url 'about' %}">Go Live</a>
+            </div>
+        </div>
+          <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
+          </div>
+    
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+        </form>
+    </span>
+    <span style="margin-right: 3rem;"></span>
+    
+        <div class="link">
+            <a href="/home/notify/">Notifications</a>
+        </div>
+    
+        <div class="link">
+            <a href="/home/logout/">Logout</a>
+        </div>
+    </div>
+
+
+
+
+      {% else %}
+
+      <div class="nav" style="padding: 0cm; height: 62px;">
+        <span class="link">
+          <a href="/home/index/">Home</a>
+        </span>
+        <div style="width: 12rem;text-align: center;" class="dropdown">
+          <button class="dropbtn">About</button>
+          <div class="dropdown-content link">
+            <a href="/home/about/">About Us</a>
+            <a href="#">Contact Us</a>
+          </div>
+        </div>
+          <div style="width: 12rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
+          </div>
+    
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 14px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.9rem; width:14rem; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+        </form>
+    </span>
+    <span style="margin-right: 3rem;"></span>
+    
+        <div class="link">
+            <a href="/home/register/">Register</a>
+        </div>
+    
+        <div class="link">
+            <a href="/home/login/">Login</a>
+        </div>
+    
+      </div>
+      
+
+      {% endif %}
+
+
+        <div class="container emp-profile">
+            
+                <div class="row">
+                    
+                    <div class="col-md-4">
+                        <div class="profile-img" style="height: 200px;">
+                            {% if profileImage.url is not None %}
+                            <img src="{{profileImage.url}}" alt="Not found"/>
+
+                            {% else %}
+                            <img src="https://afribary.com/authors/anonymous-user/photo" alt="Not found">
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    
+
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        {{name}}
+                                    </h5>
+                                    <h6>
+                                        {{description}}
+                                    </h6>
+                                    <div style="font-size: small;">RANK: {{rank}}</div>
+                                    <div style="font-size: small;">POPULARITY: {{popularity}}</div>
+                            <ul style="background-color: white; line-height: 2.3rem;" class="nav nav-tabs" id="myTab" role="tablist">
+                                <li style="">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            <p>Games</p>
+                            <!-- <a href="">Mein noob hu</a><br/>
+                            <a href="">Bootsnipp Profile</a><br/>
+                            <a href="">Bootply Profile</a> -->
+                            {% for x in gamesplit %}
+                            {{x}}
+                            <br>
+                            {% endfor %}
+                           
+                        </div>
+                        {% if not loggedIn %}
+
+                        {% elif is_following and not same %}
+                        <div>
+                        <a href="{% url 'follow' username %}" id="follow">
+                            <button class="btn btn-primary" style="margin-left: 3rem;" ><span id="mybtn">Unfollow</span></button></a>
+                            <br>
+                        </div>
+                        <br>
+
+                        {% elif not same %}
+                        <div>
+                        <a href="{% url 'follow' username %}" id="follow">
+                            <button class="btn btn-primary" style="margin-left: 3rem;" ><span id="mybtn">Follow</span></button></a>
+                            <br>
+                        </div>
+                        <br>
+                        {% endif %}
+                        
+
+
+                        {% if loggedIn and not same %} 
+                        <div> 
+                        <a href="{% url 'sendmoney' username %}" id="moneyBtn">
+                            <button class="btn btn-primary" style="margin-left: 3rem;" ><span id="mybtn">Support Gamer</span></button></a>
+                            <br>
+                        </div>
+                        <br>
+                        {% endif %}
+                        
+
+                        {% if loggedIn and not same and is_following %}
+                        <div>
+                        <button type="button" class="btn btn-primary" style="margin-left: 3rem;" data-toggle="modal" data-target="#exampleModal">
+                            Give Popularity
+                          </button>
+                        </div>
+                          
+                          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog " role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Popularity</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  
+                                    <form action="/home/givePopularity/" method="post">
+                                        {% csrf_token %}
+                                        <div style="margin-left: 50px;">
+                                        <input type="text" value="{{username}}" name="to_whom" hidden>
+                                        <label for="popularity">Popularity value : </label>
+                                        <input type="number" name="popularity" id="popularity" placeholder="Popularity Value"><br>
+                                    </div>
+
+                                        <button type="submit" style="margin-left: 180px;">Submit</button>
+
+                                    </form>
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        {% endif %}
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>User Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{username}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{name}}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Stats</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{stats}}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>State</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{state}}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Country</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{country}}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Followers</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{followers}}</p>
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Following</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{followedUsers}}</p>
+                                            </div>
+                                        </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                      
+        </div>
+
+        
+        <script>
+            $("#follow").click(
+                function(e){
+                    var href = this.href;
+                    e.preventDefault();
+                    
+                    $.ajax({
+                        url : href,
+                        success : function(response){
+
+                            if(response["following"]){
+                                $("#mybtn").html("Unfollow");
+                                window.location.reload();
+                            }
+                            else{
+                                $("#mybtn").html("Follow");
+                                window.location.reload();
+                            }
+                        }
+                    })
+                }
+            )
+        </script>
+
+    </body>
+</html>

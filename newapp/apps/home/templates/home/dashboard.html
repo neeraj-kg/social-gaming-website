@@ -1,0 +1,267 @@
+{% load static %}
+<html>
+    <head>
+        <title>Profile</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'home/profile.css' %}">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/userhome.css' %}">
+    </head>
+    <body>
+        <div class="nav" style="padding: 0cm; margin: 0px;height: 3.85rem;" >
+        <span class="link">
+          <a href="/home/index/">Home</a>
+        </span>
+        <div class="link">
+          <a href="/home/profile/">Profile</a>
+        </div>
+        <div class="link">
+            <a href="/paytm/offers/">Shop</a>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">About</button>
+            <div class="dropdown-content link">
+              <a href="/home/about/">About Us</a>
+              <a href="#">Contact</a>
+              <a href="/home/event/">Events</a>
+            </div>
+        </div>
+        <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Assemble</button>
+            <div class="dropdown-content link">
+              <a href="/chat">Chat</a>
+              <a href="{% url 'about' %}">Go Live</a>
+            </div>
+        </div>
+          <div style="width: 6rem;text-align: center;" class="dropdown">
+            <button class="dropbtn">Top Rated</button>
+            <div class="dropdown-content link">
+              <a href="/home/topPost/">Posts</a>
+              <a href="/home/topGamers/">Rankers</a>
+            </div>
+          </div>
+
+        <span style="margin-right: 22rem; "></span>
+        <span style="padding-top: 10px;"><form action="/home/search/"  method="get">
+         <input style="height: 1.7rem; width:14rem; outline: none; border-radius: 20px; padding-left: 6px; " type="text" name="searchuser"  placeholder="Search User">
+            <button style="border-radius: 6px; color:rgb(17, 12, 6); height: 30px; margin-left: 10px; background-color: #FFA500;" type="submit">Search</button>
+        </form>
+    </span>
+    <span style="margin-right: 3rem;"></span>
+
+        <div class="link">
+            <a href="/home/notify/">Notifications</a>
+        </div>
+
+        <div class="link">
+            <a href="/home/logout/">Logout</a>
+        </div>
+
+      </div>
+
+    
+        <div class="container emp-profile">
+            <!-- <form method="post" action="/home/profile/edit"> -->
+                <!-- {% csrf_token %} -->
+                <div class="row">
+                    
+                    
+                    <div class="col-md-4">
+                        <div class="profile-img" style="height: 200px;">
+                            {% if profileImage.url is not None %}
+                            <img src="{{profileImage.url}}" alt="Not found"/>
+
+                            {% else %}
+                            <img src="https://afribary.com/authors/anonymous-user/photo" alt="Not found">
+                            {% endif %}
+
+                            <div class="file btn btn-lg btn-primary">
+                            <form action="/home/changephoto/" method="post" id="form1" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="file" name="profilePic" onchange="form.submit()">                 
+                                    Change Photo
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        {{name}}
+                                    </h5>
+                                    <h6>
+                                        {{description}}
+                                    </h6>
+                                    <div style="font-size: small;">RANK :{{rank}}</div>
+                                    <div style="font-size: small;">POPULARITY :{{popularity}}</div>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist" style="background-color: white;">
+                                <li class="nav-item" style="background-color: white;">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab"  role="tab" aria-controls="home" aria-selected="true" style="margin-top: 0.8rem;" >About</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'edit' %}"><button class="btn">Edit Profile</button></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            <p>Games</p>
+                            <!-- <a href="">Mein noob hu</a><br/>
+                            <a href="">Bootsnipp Profile</a><br/>
+                            <a href="">Bootply Profile</a> -->
+                            {% for a in gamessplit %}
+                                {{a}}
+                                <br>
+                            {% endfor %}
+                            <!-- <p>SKILLS</p>
+                            <a href="">Web Designer</a><br/>
+                            <a href="">Web Developer</a><br/>
+                            <a href="">WordPress</a><br/>
+                            <a href="">WooCommerce</a><br/>
+                            <a href="">PHP, .Net</a><br/> -->
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>User Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{username}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{email}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Phone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{mobile}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Stats</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{stats}}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>State</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{state}}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Country</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{country}}</p>
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Followers</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{followers}}</p>
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Following</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{followedUsers}}</p>
+                                            </div>
+                                        </div>
+                            </div>
+                            <!-- <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Experience</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Expert</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Hourly Rate</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>10$/hr</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Total Projects</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>230</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>English Level</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Expert</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Availability</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>6 months</p>
+                                            </div>
+                                        </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Your Bio</label><br/>
+                                        <p>Your detail description</p>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </form>           
+        </div>
+
+    </body>
+</html>
